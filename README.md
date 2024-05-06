@@ -1,4 +1,4 @@
-Swift Dependency Container Series: Part 2 - Implementing a Container
+[Swift Dependency Container Series: Part 2 - Implementing a Container](https://www.youtube.com/embed/zyLDyxFdwgE?si=CJHLQpDSZWRwAYG-)
 
 ```swift
 import Foundation
