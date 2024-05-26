@@ -6,3 +6,13 @@
 //
 
 import Foundation
+
+protocol ClosureDependencyPtotocol {
+    func testClosureBaseDependencyMethod()
+}
+
+struct ClosureDependency: ClosureDependencyPtotocol {
+    func testClosureBaseDependencyMethod() {
+         
+    }
+}

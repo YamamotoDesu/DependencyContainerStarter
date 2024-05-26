@@ -6,3 +6,13 @@
 //
 
 import Foundation
+
+protocol SingleInstanceDependencyProtocol: AnyObject {
+    func testSingleInstanceMethod()
+}
+
+final class SingleInstanceDependency: SingleInstanceDependencyProtocol {
+    func testSingleInstanceMethod() {
+        
+    }
+}

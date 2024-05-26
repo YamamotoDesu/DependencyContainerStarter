@@ -1,35 +1,43 @@
 //
-//  DependencyContainerStarterTests.swift
-//  DependencyContainerStarterTests
+//  DependencyContainerTests.swift
+//  DependencyContainerTests
 //
 //  Created by Yamamoto Kyo on 2024/05/26.
 //
 
 import XCTest
+@testable import DependencyContainerStarter
 
-final class DependencyContainerStarterTests: XCTestCase {
+final class DependencyContainerTests: XCTestCase {
 
-    override func setUpWithError() throws {
-        // Put setup code here. This method is called before the invocation of each test method in the class.
+    func test_single_instance_registration() {
+        let myInstance = SingleInstanceDependency()
+        DependencyContainer.shared.register(type: .singleInstance(myInstance), for: SingleInstanceDependency.self)
+
+        let resolved = DependencyContainer.shared.resolve(type: .singleInstance, for: SingleInstanceDependency.self)
+
+        XCTAssertTrue(myInstance === resolved)
     }
 
-    override func tearDownWithError() throws {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
-    }
-
-    func testExample() throws {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
-        // Any test you write for XCTest can be annotated as throws and async.
-        // Mark your test throws to produce an unexpected failure when your test encounters an uncaught error.
-        // Mark your test async to allow awaiting for asynchronous code to complete. Check the results with assertions afterwards.
-    }
-
-    func testPerformanceExample() throws {
-        // This is an example of a performance test case.
-        measure {
-            // Put the code you want to measure the time of here.
+    func test_closure_registration() {
+        let myInstanceProvidingClosure: () -> ClosureDependencyPtotocol = {
+            ClosureDependency()
         }
+        DependencyContainer.shared.register(type: .closureBased(myInstanceProvidingClosure), for: ClosureDependencyPtotocol.self)
+
+        let _ = DependencyContainer.shared.resolve(type: .closureBased, for: ClosureDependencyPtotocol.self)
     }
 
+    func test_resolving_another_dependency_withth_closure_before_returing_from_closure() {
+        let networkingInstance = TestNetworking()
+        DependencyContainer.shared.register(type: .singleInstance(networkingInstance), for: TestNetworkingProtocol.self)
+
+        let analyticsProvidingClosure: () -> TestAnalyticsProtocol = {
+            let networking = DependencyContainer.shared.resolve(type: .singleInstance, for: TestNetworkingProtocol.self)
+            return TestAnalytics(networking: networking)
+        }
+        DependencyContainer.shared.register(type: .closureBased(analyticsProvidingClosure), for: TestAnalyticsProtocol.self)
+
+        let _ = DependencyContainer.shared.resolve(type: .closureBased, for: TestAnalyticsProtocol.self)
+    }
 }

@@ -6,3 +6,14 @@
 //
 
 import Foundation
+
+protocol TestNetworkingProtocol {
+    func makeNetworkRequest()
+}
+
+final class TestNetworking: TestNetworkingProtocol {
+    func makeNetworkRequest() {
+
+    }
+
+}
