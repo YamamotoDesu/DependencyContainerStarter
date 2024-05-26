@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3109EBA52BE8FFA80048A5DE /* DependencyContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3109EBA42BE8FFA80048A5DE /* DependencyContainer.swift */; };
 		FBC91C8F2BE61D05001E5B9C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBC91C8E2BE61D05001E5B9C /* AppDelegate.swift */; };
 		FBC91C912BE61D05001E5B9C /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBC91C902BE61D05001E5B9C /* SceneDelegate.swift */; };
 		FBC91C932BE61D05001E5B9C /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBC91C922BE61D05001E5B9C /* ViewController.swift */; };
@@ -26,6 +27,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		3109EBA42BE8FFA80048A5DE /* DependencyContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DependencyContainer.swift; sourceTree = "<group>"; };
 		FBC91C8B2BE61D05001E5B9C /* DependencyContainerStarter.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DependencyContainerStarter.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FBC91C8E2BE61D05001E5B9C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		FBC91C902BE61D05001E5B9C /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -87,6 +89,7 @@
 				FBC91C992BE61D06001E5B9C /* LaunchScreen.storyboard */,
 				FBC91C9C2BE61D06001E5B9C /* Info.plist */,
 				FBC91CA22BE61D67001E5B9C /* AppNavigationControllerProvider.swift */,
+				3109EBA42BE8FFA80048A5DE /* DependencyContainer.swift */,
 			);
 			path = DependencyContainerStarter;
 			sourceTree = "<group>";
@@ -200,6 +203,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				FBC91CAC2BE61D7F001E5B9C /* DetailModuleCoordinator.swift in Sources */,
+				3109EBA52BE8FFA80048A5DE /* DependencyContainer.swift in Sources */,
 				FBC91CB52BE61E08001E5B9C /* Networking.swift in Sources */,
 				FBC91CA32BE61D67001E5B9C /* AppNavigationControllerProvider.swift in Sources */,
 				FBC91C932BE61D05001E5B9C /* ViewController.swift in Sources */,
