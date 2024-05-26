@@ -60,3 +60,94 @@ final class DependencyContainer {
 }
 
 ```
+
+[Swift Dependency Container Series: Part 3 - Unit Testing](https://www.youtube.com/watch?v=XtdRLyRk00s)
+
+```swift
+import XCTest
+@testable import DependencyContainerStarter
+
+final class DependencyContainerTests: XCTestCase {
+
+    func test_single_instance_registration() {
+        let myInstance = SingleInstanceDependency()
+        DependencyContainer.shared.register(type: .singleInstance(myInstance), for: SingleInstanceDependency.self)
+
+        let resolved = DependencyContainer.shared.resolve(type: .singleInstance, for: SingleInstanceDependency.self)
+
+        XCTAssertTrue(myInstance === resolved)
+    }
+
+    func test_closure_registration() {
+        let myInstanceProvidingClosure: () -> ClosureDependencyPtotocol = {
+            ClosureDependency()
+        }
+        DependencyContainer.shared.register(type: .closureBased(myInstanceProvidingClosure), for: ClosureDependencyPtotocol.self)
+
+        let _ = DependencyContainer.shared.resolve(type: .closureBased, for: ClosureDependencyPtotocol.self)
+    }
+
+    func test_resolving_another_dependency_withth_closure_before_returing_from_closure() {
+        let networkingInstance = TestNetworking()
+        DependencyContainer.shared.register(type: .singleInstance(networkingInstance), for: TestNetworkingProtocol.self)
+
+        let analyticsProvidingClosure: () -> TestAnalyticsProtocol = {
+            let networking = DependencyContainer.shared.resolve(type: .singleInstance, for: TestNetworkingProtocol.self)
+            return TestAnalytics(networking: networking)
+        }
+        DependencyContainer.shared.register(type: .closureBased(analyticsProvidingClosure), for: TestAnalyticsProtocol.self)
+
+        let _ = DependencyContainer.shared.resolve(type: .closureBased, for: TestAnalyticsProtocol.self)
+    }
+}
+
+protocol SingleInstanceDependencyProtocol: AnyObject {
+    func testSingleInstanceMethod()
+}
+
+final class SingleInstanceDependency: SingleInstanceDependencyProtocol {
+    func testSingleInstanceMethod() {
+        
+    }
+}
+
+protocol ClosureDependencyPtotocol {
+    func testClosureBaseDependencyMethod()
+}
+
+struct ClosureDependency: ClosureDependencyPtotocol {
+    func testClosureBaseDependencyMethod() {
+         
+    }
+}
+
+protocol TestNetworkingProtocol {
+    func makeNetworkRequest()
+}
+
+final class TestNetworking: TestNetworkingProtocol {
+    func makeNetworkRequest() {
+
+    }
+
+}
+
+protocol TestAnalyticsProtocol {
+    func trackEvent()
+}
+
+struct TestAnalytics: TestAnalyticsProtocol {
+
+    private let networking: TestNetworkingProtocol
+
+    init(networking: TestNetworkingProtocol) {
+        self.networking = networking
+    }
+
+    func trackEvent() {
+        networking.makeNetworkRequest()
+    }
+}
+```
+
+
